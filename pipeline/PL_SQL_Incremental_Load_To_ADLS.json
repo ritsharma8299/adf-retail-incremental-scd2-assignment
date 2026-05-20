@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"url": "https://day13keyvault.vault.azure.net/"
+					"url": "https://day13keyvault.vault.azure.net/secrets/sql-password?api-version=7.0"
 				}
 			},
 			{
@@ -54,7 +54,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"url": "https://day13keyvault.vault.azure.net/"
+					"url": "https://day13keyvault.vault.azure.net/secrets/sql-server-name?api-version=7.0"
 				}
 			},
 			{
@@ -134,7 +134,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"url": "https://day13keyvault.vault.azure.net/"
+					"url": "https://day13keyvault.vault.azure.net/secrets/sql-database-name?api-version=7.0"
 				}
 			},
 			{
@@ -151,7 +151,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"url": "https://day13keyvault.vault.azure.net/"
+					"url": "https://day13keyvault.vault.azure.net/secrets/sql-username?api-version=7.0"
 				}
 			},
 			{
