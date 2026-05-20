@@ -332,7 +332,11 @@
 				"inputs": [
 					{
 						"referenceName": "DS_AzureSQL_Parameterized",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaName": "@pipeline().parameters.sourceSchemaName",
+							"tableName": "@pipeline().parameters.sourceTableName"
+						}
 					}
 				],
 				"outputs": [
