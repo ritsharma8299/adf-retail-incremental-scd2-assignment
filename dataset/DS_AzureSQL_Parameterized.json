@@ -5,9 +5,9 @@
 			"referenceName": "LS_AzureSQL_Retail",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"ServerName": "0",
-				"DatabaseName": "0",
-				"UserName": "0"
+				"ServerName": "@dataset().ServerName",
+				"DatabaseName": "@dataset().DatabaseName",
+				"UserName": "@dataset().UserName"
 			}
 		},
 		"parameters": {
@@ -16,14 +16,26 @@
 			},
 			"tableName": {
 				"type": "string"
+			},
+			"ServerName": {
+				"type": "string"
+			},
+			"DatabaseName": {
+				"type": "string"
+			},
+			"UserName": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "retail_customers_source"
+			"schema": {
+				"value": "dataset().schemaName",
+				"type": "Expression"
+			},
+			"table": "dataset().tableName"
 		}
 	}
 }
