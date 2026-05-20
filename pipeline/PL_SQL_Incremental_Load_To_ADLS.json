@@ -1,0 +1,220 @@
+{
+	"name": "PL_SQL_Incremental_Load_To_ADLS",
+	"properties": {
+		"activities": [
+			{
+				"name": "WEB_Get_SQL_Password",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://day13keyvault.vault.azure.net/"
+				}
+			},
+			{
+				"name": "SET_SQL_USERNAME",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "WEB_Get_SQL_Password",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var_sql_password",
+					"value": "@activity('WEB_Get_SQL_Password').output.value"
+				}
+			},
+			{
+				"name": "Databricks",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "LS_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "WEB_Get_SQL_Server",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://day13keyvault.vault.azure.net/"
+				}
+			},
+			{
+				"name": "SET_SQL_Server",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "WEB_Get_SQL_Server",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var_sql_server",
+					"value": "@activity('WEB_Get_SQL_Server').output.value"
+				}
+			},
+			{
+				"name": "SET_SQL_Database",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "WEB_Get_SQL_Database",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var_sql_database",
+					"value": "@activity('WEB_Get_SQL_Database').output.value"
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			},
+			{
+				"name": "Set variable3",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			},
+			{
+				"name": "WEB_Get_SQL_Database",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://day13keyvault.vault.azure.net/"
+				}
+			},
+			{
+				"name": "WEB_Get_SQL_Username",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://day13keyvault.vault.azure.net/"
+				}
+			},
+			{
+				"name": "Web3",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			}
+		],
+		"variables": {
+			"var_sql_password": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"var_storage_key": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"var_databricks_token": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"var_old_watermark": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"var_new_watermark": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"var-sql-username": {
+				"type": "String"
+			},
+			"var_sql_server": {
+				"type": "String"
+			},
+			"var_sql_database": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
