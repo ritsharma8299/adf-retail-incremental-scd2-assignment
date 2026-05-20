@@ -41,23 +41,6 @@
 				}
 			},
 			{
-				"name": "Databricks",
-				"type": "DatabricksNotebook",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "LS_AzureDatabricks",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
 				"name": "WEB_Get_SQL_Server",
 				"type": "WebActivity",
 				"dependsOn": [],
@@ -211,13 +194,16 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT last_watermark_value\nFROM dbo.pipeline_watermark\nWHERE source_table_name =\n'@{pipeline().parameters.sourceTableName}'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
 						"referenceName": "DS_AzureSQL_Parameterized",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaName": "dbo",
+							"tableName": "pipeline_watermark"
+						}
 					}
 				}
 			},
@@ -264,16 +250,16 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "@concat(\n'SELECT MAX(',\npipeline().parameters.watermarkName,\n') AS new_watermark_value FROM ',\npipeline().parameters.schemaName,\n'.',\npipeline().parameters.tableName\n)",
-							"type": "Expression"
-						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
 						"referenceName": "DS_AzureSQL_Parameterized",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaName": "@pipeline().parameters.sourceSchemaName",
+							"tableName": "@pipeline().parameters.sourceTableName"
+						}
 					}
 				}
 			},
@@ -357,20 +343,6 @@
 				]
 			}
 		],
-		"parameters": {
-			"schemaName": {
-				"type": "String",
-				"defaultValue": "@pipeline().parameters.sourceSchemaName"
-			},
-			"tableName": {
-				"type": "String",
-				"defaultValue": "@pipeline().parameters.sourceTableName"
-			},
-			"watermarkName": {
-				"type": "String",
-				"defaultValue": "pipeline().parameters.watermarkColumn"
-			}
-		},
 		"variables": {
 			"var_sql_password": {
 				"type": "String",
